@@ -14,8 +14,7 @@ def getchar(text,pos):
 	
 	# **Σημείο #3**: Προαιρετικά, προσθέστε τις δικές σας ομαδοποιήσεις
 	
-	#if c>='0' and c<='3': return c	# 0..3 
-    #if c>='4' and c<='5': return 'DIGIT4and5'	# 4 and 5 case 
+	
 	if c>='6' and c<='9': return 'DIGIT6to9' # 6 to 9 case 
 	if c=='G': return 'G'	# G case
 	if c=='K': return 'K'	# K case
