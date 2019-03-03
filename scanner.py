@@ -16,12 +16,6 @@ def getchar(text,pos):
 	
 	
 	if c>='6' and c<='9': return 'DIGIT6to9' # 6 to 9 case 
-	if c=='G': return 'G'	# G case
-	if c=='K': return 'K'	# K case
-	if c=='T': return 'T'	# T case
-	if c=='M': return 'M'	# M case
-	if c=='P': return 'P'	# P case
-	if c=='S': return 'S'	# S case
 	return c	# anything else
 	
 
