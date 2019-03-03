@@ -1,7 +1,6 @@
 """
 Sample script to test ad-hoc scanning by table drive.
 This accepts a number with optional decimal part [0-9]+(\.[0-9]+)?
-
 NOTE: suitable for optional matches
 """
 
@@ -15,10 +14,15 @@ def getchar(text,pos):
 	
 	# **Σημείο #3**: Προαιρετικά, προσθέστε τις δικές σας ομαδοποιήσεις
 	
-	if c>='0' and c<='9': return 'DIGIT'	# 0..9 grouped together
-	
-	if c=='.': return 'DOT'	# dot as a category by itself
-	
+	#if c>='0' and c<='3': return c	# 0..3 
+    #if c>='4' and c<='5': return 'DIGIT4and5'	# 4 and 5 case 
+	if c>='6' and c<='9': return 'DIGIT6to9' # 6 to 9 case 
+	if c=='G': return 'G'	# G case
+	if c=='K': return 'K'	# K case
+	if c=='T': return 'T'	# T case
+	if c=='M': return 'M'	# M case
+	if c=='P': return 'P'	# P case
+	if c=='S': return 'S'	# S case
 	return c	# anything else
 	
 
@@ -60,17 +64,26 @@ def scan(text,transitions,accepts):
 			
 	
 # **Σημείο #1**: Αντικαταστήστε με το δικό σας λεξικό μεταβάσεων
-transitions = { 's0': { 'DIGIT':'s1' },
-       			's1': { 'DIGIT':'s1','DOT':'s2' },
-       			's2': { 'DIGIT':'s3' },
-       			's3': { 'DIGIT':'s3' }       
-     		  } 
+transitions = { 's0': { '0':'s1','1':'s1','2':'s1','3':'s2' },
+       			's1': { '0':'s3','1':'s3','2':'s3','3':'s3','4':'s3','5':'s3','DIGIT6to9':'s3' },
+       			's2': { '0':'s3','1':'s3','2':'s3','3':'s3','4':'s3','5': 's15' },
+       			's3': { '0':'s4','1':'s4','2':'s4','3':'s4' ,'4':'s4','5':'s4','DIGIT6to9':'s4'},
+       			's4': { '0':'s5','1':'s5','2':'s5','3':'s5' ,'4':'s5','5':'s5','DIGIT6to9':'s5'},
+       			's5': { '0':'s6','1':'s6','2':'s6','3':'s6' ,'4':'s6','5':'s6','DIGIT6to9':'s6'},
+       			's6': { 'K' : 's7','G' : 's9', 'M' : 's12'},
+       			's7': { 'T' : 's8'},
+       			's12': { 'P' : 's13'},
+       			's13': { 'S' : 's14'},
+       			's9': { '0':'s10','1':'s10','2':'s10','3':'s10' ,'4':'s10','5':'s10','DIGIT6to9':'s10'},
+       			's10': { '0':'s11','1':'s11','2':'s11','3':'s11' ,'4':'s11','5':'s11','DIGIT6to9':'s11'},
+       			's11': { 'K' : 's7', 'M' : 's12'},
+       			's15': { '0' : 's4'}
+     		  }
 
 # **Σημείο #2**: Αντικαταστήστε με το δικό σας λεξικό καταστάσεων αποδοχής
-accepts = { 's1':'INT_TOKEN',
-       		's3':'FLOAT_TOKEN'	
+accepts = { 's8':'WIND_TOKEN',
+       		's14':'WIND_TOKEN'	
      	  }
-
 
 # get a string from input
 text = input('give some input>')
